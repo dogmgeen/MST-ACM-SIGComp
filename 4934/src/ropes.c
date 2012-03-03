@@ -22,12 +22,14 @@ int main()
     // Load the pitch heights into an array
     pitchHeights = loadPitchHeights(numberOfPitches);
     
+    // For each of the ropes, display how many people
+    //  will be able to climb all pitches of the current
+    //  trip.
     for (int i=0; i < NUM_ROPES; i++)
     {
-      int numberOfClimbers;
-
+      int numberOfClimbers = 0;
       int climbersForCurrentPitch = 1;
-      int minimumNumberOfClimbers = 1;
+
       for (int pitch=0; pitch < numberOfPitches; pitch++)
       {
         const int PITCH_HEIGHT = pitchHeights[pitch];
@@ -35,44 +37,33 @@ int main()
         bool notEnoughRope = (PITCH_HEIGHT > ROPE_LENGTH);
         if (notEnoughRope)
         {
-          climbersForCurrentPitch = 0;
+          numberOfClimbers = 0;
           break;
         }
         else
         {
-          int lengthOnTop, lengthInUse, lengthOnBottom;
-
-          lengthOnTop = 0;
-          lengthInUse = PITCH_HEIGHT;
-          lengthOnBottom = ROPE_LENGTH - lengthInUse;
-          while (lengthOnBottom >= 0)
-          {
-            lengthOnTop += PITCH_HEIGHT;
-            lengthOnBottom -= PITCH_HEIGHT;
+          int piled = 0;
+          int dangled = ROPE_LENGTH;
+          do {
             climbersForCurrentPitch++;
-          }
-
-          if (lengthOnBottom >= 0)
-          {
-            climbersForCurrentPitch++;
-          }
-
+            piled += PITCH_HEIGHT;
+            dangled -= PITCH_HEIGHT;
+          } while ( piled < ROPE_LENGTH );
         }
 
-        if (pitch > 0)
+        // Update the value of numberOfClimbers
+        if (0 == pitch)
         {
-          if (climbersForCurrentPitch < minimumNumberOfClimbers)
-          {
-            minimumNumberOfClimbers = climbersForCurrentPitch;
-          }
+          numberOfClimbers = climbersForCurrentPitch;
         }
         else
         {
-          minimumNumberOfClimbers = climbersForCurrentPitch;
+          if (numberOfClimbers > climbersForCurrentPitch)
+          {
+            numberOfClimbers = climbersForCurrentPitch;
+          }
         }
       }
-
-      numberOfClimbers = minimumNumberOfClimbers;
 
       printf("%d ", numberOfClimbers);
     }
@@ -81,7 +72,6 @@ int main()
     pitchHeights = NULL;
 
     printf("\n");
-    //printf("%d %d %d\n",mOriginal,nOriginal,max);
     scanf("%d", &numberOfPitches);
   }
 }
