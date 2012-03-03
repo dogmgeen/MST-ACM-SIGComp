@@ -31,8 +31,5 @@ int main()
     //printf("%d %d %d\n",mOriginal,nOriginal,max);
     scanf("%d", &numberOfPitches);
   }
-
-
-    
 }
 
