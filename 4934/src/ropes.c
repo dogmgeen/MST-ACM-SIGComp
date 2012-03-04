@@ -82,7 +82,6 @@ int main()
         if (HIGHEST_NUMBER_OF_PITCHES_FOR_LONGEST_ROPE < currentClimb.totalHeight)
         {
           startingRopeIndex = 3;
-          ignore = scanf("%*[ 0123456789]\n");
           break;
         }
         else if ( 30 < currentClimb.totalHeight )
@@ -99,6 +98,7 @@ int main()
       if ( 3 == startingRopeIndex )
       {
         printf("0 0 0");
+        ignore = scanf("%*[ 0123456789]\n");
       }
       else if ( 2 == startingRopeIndex )
       {
