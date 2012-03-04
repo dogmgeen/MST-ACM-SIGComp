@@ -21,7 +21,7 @@ int main()
   const int ROPES[NUM_ROPES] = {50, 60, 70};
 
   scanf("%d", &numberOfPitches);
-  while (numberOfPitches != 0)
+  while (numberOfPitches)
   {
     loadNewClimbData(&currentClimb, numberOfPitches);
 
@@ -37,7 +37,7 @@ int main()
       if ( 2*(currentClimb.totalHeight) > ROPES[i] )
       {
         /* No descent can be made safely with the current length of rope. */
-        printf("%d ", 0);
+        printf("0 ");
       }
       else
       {
@@ -67,27 +67,26 @@ void loadNewClimbData(pitch* currentClimb, const int NUM_PITCHES)
   int i;
   for (i=0; i < NUM_PITCHES; i++)
   {
-    const int PREV_HIGHEST_PITCH = currentClimb->highestPitch;
-
     scanf("%d", &currentPitch);
     currentClimb->totalHeight += currentPitch;
   
-    if ( PREV_HIGHEST_PITCH < currentPitch )
+    if ( currentClimb->highestPitch < currentPitch )
     {
       currentClimb->highestPitch = currentPitch;
     }
   }
+  return;
 }
 
 int getNumberOfClimbersForGivenRope( const pitch* CURRENT_CLIMB )
 {
-  if (CURRENT_CLIMB->highestPitch == 0)
+  if (CURRENT_CLIMB->highestPitch)
   {
-    return 0;
+    return 1+( CURRENT_CLIMB->ropeLength / CURRENT_CLIMB->highestPitch );
   }
   else
   {
-    return 1+( CURRENT_CLIMB->ropeLength / CURRENT_CLIMB->highestPitch );
+    return 0;
   }
 }
 
