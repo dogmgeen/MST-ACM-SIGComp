@@ -8,11 +8,6 @@
 
 #define NUM_ROPES 3
 
-int* loadPitchHeights(const int n);
-int totalHeightOfAllPitches(const int* pitches, const int n);
-int getHighestPitch( const int* pitches, const int n );
-
-
 int main()
 {
   int numberOfPitches;
@@ -33,7 +28,6 @@ int main()
     //  trip.
     for (int i=0; i < NUM_ROPES; i++)
     {
-
       // Test if the descent can be made safely for the given length of rope.
       const int ROPE_LENGTH  = ROPES[i];
       if ( 2*TOTAL_CLIMB_HEIGHT > ROPE_LENGTH )
@@ -43,9 +37,8 @@ int main()
       }
       else
       {
-        const int HIGHEST_PITCH = getHighestPitch( pitchHeights, numberOfPitches );
-        int greatestNumberOfClimbers = 1+(ROPE_LENGTH / HIGHEST_PITCH);
-        printf("%d ", greatestNumberOfClimbers);
+        int numberOfClimbers = getNumberOfClimbersForGivenRope( ROPE_LENGTH, pitchHeights, numberOfPitches );
+        printf("%d ", numberOfClimbers);
       }
     }
 
@@ -57,8 +50,10 @@ int main()
   }
 }
 
-int getNumberOfClimbers( const int ropeLength, const int* pitches, const int numberOfPitches )
+int getNumberOfClimbersForGivenRope( const int ROPE_LENGTH, const int* pitchHeights, const int numberOfPitches )
 {
+  const int HIGHEST_PITCH = getHighestPitch( pitchHeights, numberOfPitches );
+  return 1+(ROPE_LENGTH / HIGHEST_PITCH);
 }
 
 int* loadPitchHeights(const int numberOfPitches)
