@@ -1,93 +1,84 @@
-// Author: Doug McGeehan (djmvfb@mst.edu)
-// Date: March 2nd, 2012
+/* Author: Doug McGeehan (djmvfb@mst.edu)
+   Date: March 2nd, 2012 */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include "climb.h"
 
 #define NUM_ROPES 3
 
+typedef struct {
+  int totalHeight;
+  int highestPitch;
+  int ropeLength;
+} pitch;
+
+void loadNewClimbData(pitch*, const int);
+int getNumberOfClimbersForGivenRope(const pitch*);
+
 int main()
 {
+  pitch currentClimb;
   int numberOfPitches;
-  int* pitchHeights;
-
   const int ROPES[NUM_ROPES] = {50, 60, 70};
 
   scanf("%d", &numberOfPitches);
   while (numberOfPitches != 0)
-  { 
-    // Load the pitch heights into an array
-    pitchHeights = loadPitchHeights(numberOfPitches);
+  {
+    loadNewClimbData(&currentClimb, numberOfPitches);
 
-    const int TOTAL_CLIMB_HEIGHT = totalHeightOfAllPitches(pitchHeights, numberOfPitches);
-
-    // For each of the ropes, display how many people
-    //  will be able to climb all pitches of the current
-    //  trip.
-    for (int i=0; i < NUM_ROPES; i++)
+    /* For each of the ropes, display how many people
+        will be able to climb all pitches of the current
+        trip. */
+    int i;
+    for (i=0; i < NUM_ROPES; i++)
     {
-      // Test if the descent can be made safely for the given length of rope.
-      const int ROPE_LENGTH  = ROPES[i];
-      if ( 2*TOTAL_CLIMB_HEIGHT > ROPE_LENGTH )
+      /* Test if the descent can be made safely for the given length of rope. */
+      currentClimb.ropeLength = ROPES[i];
+
+      if ( 2*(currentClimb.totalHeight) > ROPES[i] )
       {
-        // No descent can be made safely with the current length of rope.
+        /* No descent can be made safely with the current length of rope. */
         printf("%d ", 0);
       }
       else
       {
-        int numberOfClimbers = getNumberOfClimbersForGivenRope( ROPE_LENGTH, pitchHeights, numberOfPitches );
+        int numberOfClimbers = getNumberOfClimbersForGivenRope( &currentClimb );
         printf("%d ", numberOfClimbers);
       }
     }
-
-    free(pitchHeights);
-    pitchHeights = NULL;
 
     printf("\n");
     scanf("%d", &numberOfPitches);
   }
 }
 
-int getNumberOfClimbersForGivenRope( const int ROPE_LENGTH, const int* pitchHeights, const int numberOfPitches )
+void loadNewClimbData(pitch* currentClimb, const int NUM_PITCHES)
 {
-  const int HIGHEST_PITCH = getHighestPitch( pitchHeights, numberOfPitches );
-  return 1+(ROPE_LENGTH / HIGHEST_PITCH);
-}
+  /* Reset values to default. */
+  currentClimb->totalHeight = 0;
+  currentClimb->highestPitch = 0;
 
-int* loadPitchHeights(const int numberOfPitches)
-{
-  int* pitchHeight = (int *) malloc(numberOfPitches * sizeof (int));
-  for (int i=0; i < numberOfPitches; i++)
+  int currentPitch;
+
+  /* Get all pitch heights from stdin
+      + currentClimb->totalHeight is the sum of all pitch heights
+      + currentClimb->highestPitch is the highest pitch of the current climb */
+  int i;
+  for (i=0; i < NUM_PITCHES; i++)
   {
-    scanf("%d", &(pitchHeight[i]));
-  }
+    const int PREV_HIGHEST_PITCH = currentClimb->highestPitch;
 
-  return pitchHeight;
-}
-
-int totalHeightOfAllPitches(const int* pitches, const int numberOfPitches)
-{
-  int totalHeight = 0;
-  for (int i=0; i<numberOfPitches; i++)
-  {
-    totalHeight += pitches[i];
-  }
-  return totalHeight;
-}
-
-int getHighestPitch( const int* pitches, const int numberOfPitches )
-{
-  int highestPitch = 0;
-  for (int i=0; i < numberOfPitches; i++)
-  {
-    if ( pitches[i] > highestPitch )
+    scanf("%d", &currentPitch);
+    currentClimb->totalHeight += currentPitch;
+  
+    if ( PREV_HIGHEST_PITCH < currentPitch )
     {
-      highestPitch = pitches[i];
+      currentClimb->highestPitch = currentPitch;
     }
   }
+}
 
-  return highestPitch;
+int getNumberOfClimbersForGivenRope( const pitch* CURRENT_CLIMB )
+{
+  return 1+( CURRENT_CLIMB->ropeLength / CURRENT_CLIMB->highestPitch );
 }
 
