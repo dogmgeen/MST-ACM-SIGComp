@@ -1,0 +1,5 @@
+To compile, do the following:
+$ c99 ./src/ropes.c 
+$ ./a.out < test/sample.dat
+
+That's all the instructions I have for now. Happy coding!
