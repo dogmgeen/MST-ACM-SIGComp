@@ -39,12 +39,8 @@ int main()
           longest rope. */
       printf("0 0 0");
 
-      /* Move to next line of input. */
-      int itr;
-      for (itr=0; itr < numberOfPitches; itr++)
-      {
-        ignore = scanf("%d", &ignore);
-      }
+      /* Move to next line of input. Just ignore everything until newline. */
+      ignore = scanf("%*[ 0123456789]\n");
     }
     else
     {
