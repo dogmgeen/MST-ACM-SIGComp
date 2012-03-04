@@ -12,7 +12,6 @@ typedef struct {
   int ropeLength;
 } pitch;
 
-void loadNewClimbData(pitch*, const int);
 int getNumberOfClimbersForGivenRope(const pitch*);
 
 int main()
@@ -24,8 +23,6 @@ int main()
   ignore = scanf("%d", &numberOfPitches);
   while (numberOfPitches)
   {
-    /*loadNewClimbData(&currentClimb, numberOfPitches);*/
-
     /* Reset values to default. */
     currentClimb.totalHeight = 0;
     currentClimb.highestPitch = 0;
@@ -72,31 +69,6 @@ int main()
   }
 
   return 0;
-}
-
-void loadNewClimbData(pitch* currentClimb, const int NUM_PITCHES)
-{
-  /* Reset values to default. */
-  currentClimb->totalHeight = 0;
-  currentClimb->highestPitch = 0;
-
-  int currentPitch;
-
-  /* Get all pitch heights from stdin
-      + currentClimb->totalHeight is the sum of all pitch heights
-      + currentClimb->highestPitch is the highest pitch of the current climb */
-  int i;
-  for (i=0; i < NUM_PITCHES; i++)
-  {
-    ignore = scanf("%d", &currentPitch);
-    currentClimb->totalHeight += currentPitch;
-  
-    if ( currentClimb->highestPitch < currentPitch )
-    {
-      currentClimb->highestPitch = currentPitch;
-    }
-  }
-  return;
 }
 
 int getNumberOfClimbersForGivenRope( const pitch* CURRENT_CLIMB )
