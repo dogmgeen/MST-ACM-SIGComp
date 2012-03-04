@@ -44,6 +44,23 @@ int main()
     }
     else
     {
+      int startingRopeIndex;
+      if ( 30 < numberOfPitches )
+      {
+        /* The 60- and 50-foot rope will not be able to descend the mountain! */
+        printf("0 0 ");
+        startingRopeIndex = 2;
+      }
+      else if ( 25 < numberOfPitches )
+      {
+        /* The 50-foot rope will not be able to descend the mountain! */
+        printf("0 ");
+        startingRopeIndex = 1;   
+      }
+      else
+      {
+        startingRopeIndex = 0;
+      }
 
       /* Reset values to default. */
       currentClimb.totalHeight = 0;
@@ -69,7 +86,7 @@ int main()
       /* For each of the ropes, display how many people
           will be able to climb all pitches of the current
           trip. */
-      for (itr=0; itr < NUM_ROPES; itr++)
+      for (itr=startingRopeIndex; itr < NUM_ROPES; itr++)
       {
         /* Test if the descent can be made safely for the given length of rope. */
         currentClimb.ropeLength = ROPES[itr];
