@@ -50,8 +50,7 @@ int main()
     /* For each of the ropes, display how many people
         will be able to climb all pitches of the current
         trip. */
-    int i;
-    for (i=0; i < NUM_ROPES; i++)
+    for (itr=0; itr < NUM_ROPES; itr++)
     {
       /* Test if the descent can be made safely for the given length of rope. */
       currentClimb.ropeLength = ROPES[itr];
