@@ -41,15 +41,8 @@ int main()
       }
       else
       {
-        if (0 == currentClimb.highestPitch)
-        {
-          return -1;
-        }
-        else
-        {
-          int numberOfClimbers = getNumberOfClimbersForGivenRope( &currentClimb );
-          printf("%d ", numberOfClimbers);
-        }
+        int numberOfClimbers = getNumberOfClimbersForGivenRope( &currentClimb );
+        printf("%d ", numberOfClimbers);
       }
     }
 
@@ -90,7 +83,7 @@ int getNumberOfClimbersForGivenRope( const pitch* CURRENT_CLIMB )
 {
   if (CURRENT_CLIMB->highestPitch == 0)
   {
-    return -1;
+    return 0;
   }
   else
   {
