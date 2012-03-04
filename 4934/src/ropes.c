@@ -23,18 +23,38 @@ int main()
   scanf("%d", &numberOfPitches);
   while (numberOfPitches)
   {
-    loadNewClimbData(&currentClimb, numberOfPitches);
+    /*loadNewClimbData(&currentClimb, numberOfPitches);*/
+
+    /* Reset values to default. */
+    currentClimb.totalHeight = 0;
+    currentClimb.highestPitch = 0;
+
+    int currentPitch;
+
+    /* Get all pitch heights from stdin
+        + currentClimb->totalHeight is the sum of all pitch heights
+        + currentClimb->highestPitch is the highest pitch of the current climb */
+    int itr;
+    for (itr=0; itr < numberOfPitches; itr++)
+    {
+      scanf("%d", &currentPitch);
+      currentClimb.totalHeight += currentPitch;
+  
+      if ( currentClimb.highestPitch < currentPitch )
+      {
+        currentClimb.highestPitch = currentPitch;
+      }
+    }
 
     /* For each of the ropes, display how many people
         will be able to climb all pitches of the current
         trip. */
-    int i;
-    for (i=0; i < NUM_ROPES; i++)
+    for (itr=0; itr < NUM_ROPES; itr++)
     {
       /* Test if the descent can be made safely for the given length of rope. */
-      currentClimb.ropeLength = ROPES[i];
+      currentClimb.ropeLength = ROPES[itr];
 
-      if ( 2*(currentClimb.totalHeight) > ROPES[i] )
+      if ( 2*(currentClimb.totalHeight) > ROPES[itr] )
       {
         /* No descent can be made safely with the current length of rope. */
         printf("0 ");
