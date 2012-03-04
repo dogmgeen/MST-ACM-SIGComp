@@ -13,7 +13,6 @@ static int ignore;
 typedef struct {
   int totalHeight;
   int highestPitch;
-  int ropeLength;
 } pitch;
 
 int main()
@@ -48,13 +47,11 @@ int main()
       if ( 30 < numberOfPitches )
       {
         /* The 60- and 50-foot rope will not be able to descend the mountain! */
-        printf("0 0 ");
         startingRopeIndex = 2;
       }
       else if ( 25 < numberOfPitches )
       {
         /* The 50-foot rope will not be able to descend the mountain! */
-        printf("0 ");
         startingRopeIndex = 1;   
       }
       else
@@ -74,13 +71,42 @@ int main()
       int itr;
       for (itr=0; itr < numberOfPitches; itr++)
       {
-        scanf("%d", &currentPitch);
+        ignore = scanf("%d", &currentPitch);
         currentClimb.totalHeight += currentPitch;
   
         if ( currentClimb.highestPitch < currentPitch )
         {
           currentClimb.highestPitch = currentPitch;
         }
+
+        if (HIGHEST_NUMBER_OF_PITCHES_FOR_LONGEST_ROPE < currentClimb.totalHeight)
+        {
+          startingRopeIndex = 3;
+          ignore = scanf("%*[ 0123456789]\n");
+          break;
+        }
+        else if ( 30 < currentClimb.totalHeight )
+        {
+          startingRopeIndex = 2;
+        }
+        else if ( 25 < currentClimb.totalHeight )
+        {
+          startingRopeIndex = 1;
+        }
+      }
+
+
+      if ( 3 == startingRopeIndex )
+      {
+        printf("0 0 0");
+      }
+      else if ( 2 == startingRopeIndex )
+      {
+        printf("0 0 ");
+      }
+      else if ( 1 == startingRopeIndex )
+      {
+        printf("0 ");
       }
 
       /* For each of the ropes, display how many people
@@ -88,24 +114,13 @@ int main()
           trip. */
       for (itr=startingRopeIndex; itr < NUM_ROPES; itr++)
       {
-        /* Test if the descent can be made safely for the given length of rope. */
-        currentClimb.ropeLength = ROPES[itr];
-
-        if ( 2*(currentClimb.totalHeight) > ROPES[itr] )
+        if (currentClimb.highestPitch)
         {
-          /* No descent can be made safely with the current length of rope. */
-          printf("0 ");
+          printf("%d ", 1+( ROPES[itr] / currentClimb.highestPitch ));
         }
         else
         {
-          if (currentClimb.highestPitch)
-          {
-            printf("%d ", 1+( currentClimb.ropeLength / currentClimb.highestPitch ));
-          }
-          else
-          {
-            printf("0 ");
-          }
+          printf("0 ");
         }
       }
     }
