@@ -20,6 +20,10 @@ int main()
   int numberOfPitches;
   const int ROPES[ NUM_ROPES ] = {50, 60, 70};
 
+  /* In order to descend, the total height of all pitch heights
+      must be less than or equal to half the length of the rope being used. */
+  const int MAX_DESCENT_HEIGHT[ NUM_ROPES ] = {25, 30, 35};
+
   ignore = scanf("%d", &numberOfPitches);
   while (numberOfPitches)
   {
@@ -59,8 +63,17 @@ int main()
       }
       else
       {
-        int numberOfClimbers = getNumberOfClimbersForGivenRope( &currentClimb );
-        printf("%d ", numberOfClimbers);
+        if (currentClimb.highestPitch)
+        {
+          printf("%d ", 1+( currentClimb.ropeLength / currentClimb.highestPitch ));
+        }
+        else
+        {
+          printf("%d ", 0);
+        }
+
+/*        int numberOfClimbers = getNumberOfClimbersForGivenRope( &currentClimb );
+        printf("%d ", numberOfClimbers);*/
       }
     }
 
