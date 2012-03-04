@@ -2,8 +2,7 @@
    Date: March 2nd, 2012 */
 
 #include <stdio.h>
-
-#define NUM_ROPES 3
+static int ignore;
 
 typedef struct {
   int totalHeight;
@@ -18,9 +17,9 @@ int main()
 {
   pitch currentClimb;
   int numberOfPitches;
-  const int ROPES[NUM_ROPES] = {50, 60, 70};
+  const int ROPES[3] = {50, 60, 70};
 
-  scanf("%d", &numberOfPitches);
+  ignore = scanf("%d", &numberOfPitches);
   while (numberOfPitches)
   {
     loadNewClimbData(&currentClimb, numberOfPitches);
@@ -29,7 +28,7 @@ int main()
         will be able to climb all pitches of the current
         trip. */
     int i;
-    for (i=0; i < NUM_ROPES; i++)
+    for (i=0; i < 3; i++)
     {
       /* Test if the descent can be made safely for the given length of rope. */
       currentClimb.ropeLength = ROPES[i];
@@ -47,7 +46,7 @@ int main()
     }
 
     printf("\n");
-    scanf("%d", &numberOfPitches);
+    ignore = scanf("%d", &numberOfPitches);
   }
 
   return 0;
@@ -67,7 +66,7 @@ void loadNewClimbData(pitch* currentClimb, const int NUM_PITCHES)
   int i;
   for (i=0; i < NUM_PITCHES; i++)
   {
-    scanf("%d", &currentPitch);
+    ignore = scanf("%d", &currentPitch);
     currentClimb->totalHeight += currentPitch;
   
     if ( currentClimb->highestPitch < currentPitch )
