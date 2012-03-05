@@ -14,8 +14,20 @@ int main()
   int numberOfSeries;
   scanf("%d\n", &numberOfSeries);
 
-  while (fgets(buffer, BUFFER_SIZE, stdin))
+  int series_itr;
+  for (series_itr=0; series_itr<numberOfSeries; series_itr++)
   {
+    int totalMinutes = 0;
+    fgets(buffer, BUFFER_SIZE, stdin);
+
+    int numberOfBooks;
+    sscanf(buffer, "%d", &numberOfBooks);
+
+    int book_itr;
+    for (book_itr=0; book_itr<numberOfBooks; book_itr++)
+    {
+    }
+
     printf(TEMPLATE_LINE, 0);
   }
 
