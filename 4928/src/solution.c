@@ -17,7 +17,6 @@ int main()
   while (fgets(buffer, BUFFER_SIZE, stdin))
   {
     printf(TEMPLATE_LINE, 0);
-    puts(buffer);
   }
 
   return 0;
