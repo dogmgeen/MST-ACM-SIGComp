@@ -4,17 +4,20 @@ Date: March 4th, 2012
 */
 
 #include <stdio.h>
+#define BUFFER_SIZE 1024
 
 int main()
 {
-  int numberOfSeries;
-  scanf("%d", &numberOfSeries);
-  printf("Number of series: %d\n", numberOfSeries);
+  const char TEMPLATE_LINE[] = "Boudreau is going to spend %d minutes watching movies.\n";
+  char buffer[BUFFER_SIZE];
 
-  while (!feof(stdin))
+  int numberOfSeries;
+  scanf("%d\n", &numberOfSeries);
+
+  while (fgets(buffer, BUFFER_SIZE, stdin))
   {
-    puts("Just keep looping until the EOF");
-    scanf("%*[ 0123456789\n]");
+    printf(TEMPLATE_LINE, 0);
+    puts(buffer);
   }
 
   return 0;
