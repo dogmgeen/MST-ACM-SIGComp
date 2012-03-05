@@ -25,9 +25,15 @@ int main()
       must be less than or equal to half the length of the rope being used. */
   const int MAX_DESCENT_HEIGHT[ NUM_ROPES ] = {25, 30, 35};
 
-  ignore = scanf("%d", &numberOfPitches);
-  while (numberOfPitches)
+  while (!feof(stdin))
   {
+    ignore = scanf("%d", &numberOfPitches);
+    
+    if (numberOfPitches == 0)
+    {
+      break;
+    }
+
     if ( HIGHEST_NUMBER_OF_PITCHES_FOR_LONGEST_ROPE < numberOfPitches )
     {
       /* We know a pitch can be at least one foot. The longest rope we have
@@ -126,7 +132,6 @@ int main()
     }
 
     printf("\n");
-    ignore = scanf("%d", &numberOfPitches);
   }
 
   return 0;
