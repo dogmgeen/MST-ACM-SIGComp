@@ -1,0 +1,14 @@
+START
+Joe 10 110
+END
+START
+James 100 150
+Laura 100 140
+Hershey 100 130
+END
+START
+Hershey0 1 5
+Hershey2 1 3
+Hershey1 1 4
+Hershey3 1 2
+END
